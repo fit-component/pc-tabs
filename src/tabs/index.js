@@ -27,7 +27,9 @@ export default class Tabs extends React.Component {
                 activeIndex = index
             }
         })
-        this.setActive(this.state.activeKey, activeIndex)
+        setTimeout(()=> {
+            this.setActive(this.state.activeKey, activeIndex)
+        })
     }
 
     componentWillReceiveProps(nextProps) {
