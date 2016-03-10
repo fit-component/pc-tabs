@@ -72,7 +72,13 @@ export default class Tabs extends React.Component {
     }
 
     render() {
-        let Title = React.Children.map(this.props.children, (item, index)=> {
+        const {className, children, ...others} = this.props
+        const classes = classNames({
+            '_namespace': true,
+            [className]: className
+        })
+
+        let Title = React.Children.map(children, (item, index)=> {
             let titleClassNames = classNames({
                 'active': this.state.activeKey === item.key,
                 'title-item': true,
@@ -84,7 +90,7 @@ export default class Tabs extends React.Component {
             )
         })
 
-        let Children = React.Children.map(this.props.children, (item)=> {
+        let Children = React.Children.map(children, (item)=> {
             return React.cloneElement(item, {
                 active: this.state.activeKey === item.key
             })
@@ -97,7 +103,7 @@ export default class Tabs extends React.Component {
         })
 
         return (
-            <div className="_namespace">
+            <div {...others} className={classes}>
                 <div className="title-container">
                     <div className={moveBarClassnames}
                          style={this.state.moveBarStyle}></div>

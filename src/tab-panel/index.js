@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 export default class TabPanel extends React.Component {
     constructor(props) {
@@ -7,12 +8,18 @@ export default class TabPanel extends React.Component {
     }
 
     render() {
-        if (!this.props.active) {
+        const {className, active, ...others} = this.props
+        const classes = classNames({
+            '_namespace': true,
+            [className]: className
+        })
+
+        if (!active) {
             return null
         }
 
         return (
-            <div>
+            <div {...others} className={classes}>
                 {this.props.children}
             </div>
         )
