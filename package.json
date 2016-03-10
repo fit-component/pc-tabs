@@ -1,6 +1,6 @@
 {
   "name": "fit-tabs",
-  "version": "0.2.52",
+  "version": "0.2.53",
   "description": "tabs",
   "main": "lib/index.js",
   "scripts": {
@@ -17,8 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "react": "^0.14.7",
-    "react-dom": "^0.14.7",
     "classnames": "^2.2.1",
+    "react-dom": "^0.14.7",
     "jquery": "~2.1.3"
   }
 }
