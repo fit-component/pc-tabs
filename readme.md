@@ -3,5 +3,5 @@
 ---
 
 ````jsx
-npm install fit-tabs /* or */ fis3 install fit-tabs
+npm install fit-tabs
 ````
