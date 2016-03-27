@@ -1,6 +1,6 @@
 {
   "name": "fit-tabs",
-  "version": "2.0.9",
+  "version": "2.0.22",
   "description": "tabs",
   "main": "lib/index.js",
   "scripts": {
