@@ -1,20 +1,21 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import classNames from 'classnames'
-import $ from 'jquery'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import * as classNames from 'classnames'
+import * as $ from 'jquery'
+import * as module from './module'
+import {others} from '../../../../common/transmit-transparently/src'
 import './index.scss'
 
-export default class Tabs extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            activeKey: this.props.activeKey || this.props.defaultActiveKey,
-            moveBarStyle: {},
-            isForward: false
-        }
-    }
+export default class Tabs extends React.Component <module.PropsInterface, module.StateInterface> {
+    static defaultProps: module.PropsInterface = new module.Props()
+    public state: module.StateInterface = new module.State()
+    previousTitleIndex: number
+    dom: Element
 
     componentWillMount() {
+        this.state = {
+            activeKey: this.props.activeKey || this.props.defaultActiveKey
+        }
         this.previousTitleIndex = -1
     }
 
@@ -22,7 +23,7 @@ export default class Tabs extends React.Component {
         this.dom = ReactDOM.findDOMNode(this)
 
         let activeIndex = -1
-        React.Children.map(this.props.children, (item, index)=> {
+        React.Children.map(this.props.children, (item: any, index: number)=> {
             if (this.state.activeKey === item.key) {
                 activeIndex = index
             }
@@ -32,15 +33,15 @@ export default class Tabs extends React.Component {
         })
     }
 
-    componentWillReceiveProps(nextProps) {
-        if ('activeKey' in nextProps) {
+    componentWillReceiveProps(nextProps: module.PropsInterface) {
+        if ('activeKey' in nextProps && nextProps.activeKey !== null) {
             this.setState({
                 activeKey: nextProps.activeKey
             })
         }
     }
 
-    setActive(value, index) {
+    setActive(value: string|number, index: number) {
         if (index === this.previousTitleIndex)return
 
         const $dom = $(this.dom)
@@ -66,19 +67,18 @@ export default class Tabs extends React.Component {
         this.previousTitleIndex = index
     }
 
-    handleTitleClick(value, index) {
+    handleTitleClick(value: string|number, index: number) {
         this.setActive(value, index)
         this.props.onChange(value)
     }
 
     render() {
-        const {className, children, ...others} = this.props
         const classes = classNames({
             '_namespace': true,
-            [className]: className
+            [this.props['className']]: !!this.props['className']
         })
 
-        let Title = React.Children.map(children, (item, index)=> {
+        let Title = React.Children.map(this.props.children, (item: any, index: number)=> {
             let titleClassNames = classNames({
                 'active': this.state.activeKey === item.key,
                 'title-item': true,
@@ -90,7 +90,7 @@ export default class Tabs extends React.Component {
             )
         })
 
-        let Children = React.Children.map(children, (item)=> {
+        let Children = React.Children.map(this.props.children, (item: any)=> {
             return React.cloneElement(item, {
                 active: this.state.activeKey === item.key
             })
@@ -103,7 +103,7 @@ export default class Tabs extends React.Component {
         })
 
         return (
-            <div {...others} className={classes}>
+            <div {...others(new module.Props(), this.props)} className={classes}>
                 <div className="title-container">
                     <div className={moveBarClassnames}
                          style={this.state.moveBarStyle}></div>
@@ -114,17 +114,5 @@ export default class Tabs extends React.Component {
                 </div>
             </div>
         )
-    }
-}
-
-Tabs.defaultProps = {
-    // @desc 设置默认打开哪个tab,与tabPanel的key对应,只有初始化有效
-    defaultActiveKey: '',
-
-    // @desc 同defaultActiveKey,但是可以让其受外部控制
-    activeKey: '',
-
-    // @desc 切换tab时的回调 第一个参数:切换tab的key
-    onChange: ()=> {
     }
 }

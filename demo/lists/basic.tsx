@@ -1,8 +1,8 @@
-import React from 'react'
-import { Tabs, TabPanel } from 'fit-tabs'
+import * as React from 'react'
+import {Tabs, TabPanel} from '../../src'
 
-export default class Demo extends React.Component {
-    handleChange(value) {
+export default class Demo extends React.Component <any, any> {
+    handleChange(value: string) {
         console.log('回调', value)
     }
 
