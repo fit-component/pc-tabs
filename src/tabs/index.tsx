@@ -79,14 +79,15 @@ export default class Tabs extends React.Component <module.PropsInterface, module
         })
 
         let Title = React.Children.map(this.props.children, (item: any, index: number)=> {
+            const isActive = this.state.activeKey === item.key
             let titleClassNames = classNames({
-                'active': this.state.activeKey === item.key,
+                'active': isActive,
                 'title-item': true,
                 [`title-item-${index}`]: true
             })
             return (
                 <div onClick={this.handleTitleClick.bind(this,item.key,index)}
-                     className={titleClassNames}>{item.props.tab}</div>
+                     className={titleClassNames}>{item.props.tab || item.props.tabRender(isActive)}</div>
             )
         })
 

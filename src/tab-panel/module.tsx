@@ -12,6 +12,11 @@ export interface PropsInterface {
     tab?: string
 
     /**
+     * 标签名,可以渲染任意 React 元素
+     */
+    tabRender?: (isActive?: boolean)=>React.ReactElement<any>
+
+    /**
      * 是否处于显示状态
      */
     active?: boolean
@@ -21,8 +26,11 @@ export interface PropsInterface {
 
 export class Props implements PropsInterface {
     key = ''
-    tab = '标签'
+    tab = ''
     active = false
+    tabRender = (): any=> {
+        return null
+    }
 }
 
 export interface StateInterface {
