@@ -6,6 +6,28 @@ import * as module from './module'
 import {others} from '../../../../common/transmit-transparently/src'
 import './index.scss'
 
+const renderTab = (name: string)=> {
+    return (active: boolean)=> {
+        if (!active) {
+            return (
+                <div className="center-text">{name}</div>
+            )
+        } else {
+            return (
+                <div className="tab-bar-content">
+                    <div className="tab-bar-left">
+                        <div className="tab-bar-left-nav"></div>
+                    </div>
+                    {name}
+                    <div className="tab-bar-right">
+                        <div className="tab-bar-right-nav"></div>
+                    </div>
+                </div>
+            )
+        }
+    }
+}
+
 export default class Tabs extends React.Component <module.PropsInterface, module.StateInterface> {
     static defaultProps: module.PropsInterface = new module.Props()
     public state: module.StateInterface = new module.State()
@@ -75,7 +97,8 @@ export default class Tabs extends React.Component <module.PropsInterface, module
     render() {
         const classes = classNames({
             '_namespace': true,
-            [this.props['className']]: !!this.props['className']
+            [this.props['className']]: !!this.props['className'],
+            'retro': this.props.type === 'retro'
         })
 
         let Title = React.Children.map(this.props.children, (item: any, index: number)=> {
@@ -85,9 +108,17 @@ export default class Tabs extends React.Component <module.PropsInterface, module
                 'title-item': true,
                 [`title-item-${index}`]: true
             })
+
+            let titleContent: React.ReactElement<any> = item.props.tab || item.props.tabRender(isActive)
+            switch (this.props.type) {
+                case 'retro':
+                    titleContent = renderTab(item.props.tab)(isActive)
+                    break
+            }
+
             return (
                 <div onClick={this.handleTitleClick.bind(this,item.key,index)}
-                     className={titleClassNames}>{item.props.tab || item.props.tabRender(isActive)}</div>
+                     className={titleClassNames}>{titleContent}</div>
             )
         })
 

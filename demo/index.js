@@ -1,2 +1,2 @@
 // @demo
-// basic:12
+// basic:12 old-style:12

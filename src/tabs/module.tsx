@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+export type Type = 'retro'
+
 export interface PropsInterface {
     /**
      * 设置默认打开哪个tab,与tabPanel的key对应,只有初始化有效
@@ -15,6 +17,11 @@ export interface PropsInterface {
      * 切换tab时的回调
      */
     onChange?: (key?: string|number)=> void
+
+    /**
+     * 风格
+     */
+        type?: Type
 
     [x: string]: any
 }
