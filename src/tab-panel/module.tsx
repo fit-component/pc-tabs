@@ -4,7 +4,7 @@ export interface PropsInterface {
     /**
      * 对应Tabs的defaultActiveKey
      */
-    key?: string
+    activeKey?: string
 
     /**
      * 标签名
@@ -25,7 +25,7 @@ export interface PropsInterface {
 }
 
 export class Props implements PropsInterface {
-    key = ''
+    activeKey = ''
     tab = ''
     active = false
     tabRender = (): any=> {

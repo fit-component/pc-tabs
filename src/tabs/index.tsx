@@ -46,7 +46,7 @@ export default class Tabs extends React.Component <module.PropsInterface, module
 
         let activeIndex = -1
         React.Children.map(this.props.children, (item: any, index: number)=> {
-            if (this.state.activeKey === item.key) {
+            if (this.state.activeKey === item.props.activeKey) {
                 activeIndex = index
             }
         })
@@ -102,7 +102,7 @@ export default class Tabs extends React.Component <module.PropsInterface, module
         })
 
         let Title = React.Children.map(this.props.children, (item: any, index: number)=> {
-            const isActive = this.state.activeKey === item.key
+            const isActive = this.state.activeKey === item.props.activeKey
             let titleClassNames = classNames({
                 'active': isActive,
                 'title-item': true,
@@ -117,14 +117,14 @@ export default class Tabs extends React.Component <module.PropsInterface, module
             }
 
             return (
-                <div onClick={this.handleTitleClick.bind(this,item.key,index)}
+                <div onClick={this.handleTitleClick.bind(this,item.props.activeKey,index)}
                      className={titleClassNames}>{titleContent}</div>
             )
         })
 
         let Children = React.Children.map(this.props.children, (item: any)=> {
             return React.cloneElement(item, {
-                active: this.state.activeKey === item.key
+                active: this.state.activeKey === item.props.activeKey
             })
         })
 
